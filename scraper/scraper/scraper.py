@@ -9,6 +9,8 @@ this would mean the extension and selenium could more directly speak to one anot
 
 """
 from selenium import webdriver
+import os
+
 # help(selenium)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
@@ -38,6 +40,7 @@ num = 5
 
 
 options = Options()
+# print(options.arguments)
 options.add_argument('lang=en') 
 
 
@@ -57,7 +60,10 @@ options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
 
 # try:
-driver = webdriver.Chrome()#"driver",options=options)
+KeyError
+options.binary_location = "chrome/chrome-linux64/chrome"
+
+driver = webdriver.Chrome(options=options)#"driver",options=options)
 # except Exception: 
 # driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 # self.driver = webdriver.Firefox(driver,options=options)
@@ -92,11 +98,5 @@ try:
     wait.until(EC.presence_of_element_located((By.CLASS_NAME,"bRMDJf")))
 except:
     print("didn't work")
-    
-
-# highest_index = self.offset*self.jump
-highest_index = offset#
-count = 0
-
 
 

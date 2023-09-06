@@ -9,4 +9,5 @@ cd chrome
 echo "unzipping"
 unzip chrome-linux64.zip
 rm -f chrome-linux64.zip
+
 echo "done!"
