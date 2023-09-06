@@ -9,8 +9,8 @@ this would mean the extension and selenium could more directly speak to one anot
 
 """
 from selenium import webdriver
-import os
-
+import linkdownloadersite
+import multiprocessing 
 # help(selenium)
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
@@ -51,7 +51,7 @@ options.page_load_strategy = 'none'
 
 options.add_argument('--disable-dev-shm-usage')
 
-# options.add_extension("blockerextension.crx")
+options.add_extension("scraper/blockerextension.crx")
 
 options.add_argument('--disable-infobars')
 options.add_argument('--disable-gpu')
@@ -64,14 +64,14 @@ KeyError
 options.binary_location = "chrome/chrome-linux64/chrome"
 
 driver = webdriver.Chrome(options=options)#"driver",options=options)
-# except Exception: 
-# driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
-# self.driver = webdriver.Firefox(driver,options=options)
-
 
 url = "https://www.google.com/search"
-#headers = {"User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36"}
-#search = "cat"
+a = linkdownloadersite.downloader()
+def run_server(s):
+    s.run()
+ts = multiprocessing.Process(target=run_server,args=(a,))
+ts.start()
+
 params = {
     "q":search,
     "tbm": "isch",                # image results
@@ -99,4 +99,5 @@ try:
 except:
     print("didn't work")
 
+ts.terminate()
 

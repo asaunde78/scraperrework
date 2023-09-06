@@ -8,6 +8,7 @@ authors = ["asaunde78 <saundersasher78@gmail.com>"]
 python = "^3.10"
 selenium = "^4.11.2"
 chromedriver-binary = "^118.0.5982"
+linkdownloadersite = "^0.1.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
