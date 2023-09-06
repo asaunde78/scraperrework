@@ -98,6 +98,47 @@ try:
     wait.until(EC.presence_of_element_located((By.CLASS_NAME,"bRMDJf")))
 except:
     print("didn't work")
+highest_index = 0#
+count = 5
+while len(driver.find_elements(By.ID, f"DONE")) == 0:
+        
+    thumbnails = driver.find_elements(By.CLASS_NAME,"bRMDJf")
+    thumbnails = thumbnails[highest_index:]
+    tries = 0
+    # thumbnails = thumbnails[highest_index:][::]
+    for nail in thumbnails:
+
+        # while tries < self.tries:
+        try:
+            # print("about to click! so excited")
+            nail.click()
+            # if self.slower:
+            #     time.sleep(1)
+            
+            # break
+        except Exception as e:
+            
+            print(f"[{offset}-ERROR] failed to click: ", e)
+            tries +=1
+            if tries == 5:
+                print("[ERROR] RAN OUT OF TRIES :/")
+            continue
+        class_name = "f2By0e"
+        # waitstart = time.time()
+        count += 1
+        try:
+            wait = WebDriverWait(driver, 3)
+            wait.until(EC.presence_of_element_located((By.CLASS_NAME, class_name))) # looking for image holder
+        except:
+            continue
+        
+        if(len(driver.find_elements(By.ID, f"DONE")) > 0):
+            print(f"[{offset}DONE] !!! FOUND A DONE")
+            break 
+        
+        print(f"[IMAGE] {offset} got image {count}/{num}")
+    
+        highest_index += 1#*ind
 
 ts.terminate()
 
