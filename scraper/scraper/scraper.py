@@ -34,9 +34,9 @@ import chromedriver_binary
 import urllib.parse 
 import time
 
-search = "dog"
+search = "valorant"
 offset = 0
-num = 5
+num = 50
 
 
 options = Options()
@@ -99,7 +99,7 @@ try:
 except:
     print("didn't work")
 highest_index = 0#
-count = 5
+count = 0
 while len(driver.find_elements(By.ID, f"DONE")) == 0:
         
     thumbnails = driver.find_elements(By.CLASS_NAME,"bRMDJf")
