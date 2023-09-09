@@ -117,6 +117,7 @@ class downloader():
                 print("clearing!")
                 for filename in os.listdir(self.folder):
                     file_path = os.path.join(self.folder, filename)
+                    print(file_path)
                     try:
                         if os.path.isfile(file_path) or os.path.islink(file_path):
                             os.unlink(file_path)
