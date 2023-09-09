@@ -65,7 +65,9 @@ class scraper():
         count = 0
         while len(self.driver.find_elements(By.ID, f"DONE")) == 0:
                 
-            thumbnails = self.driver.find_elements(By.CLASS_NAME,"bRMDJf")
+            # thumbnails = self.driver.find_elements(By.CLASS_NAME,"bRMDJf")
+            thumbnails = self.driver.find_elements(By.CLASS_NAME,"wXeWr")
+            
             thumbnails = thumbnails[highest_index:]
             tries = 0
             # thumbnails = thumbnails[highest_index:][::]
@@ -126,6 +128,6 @@ if __name__ == "__main__":
     a.start()# <- we don't need this 
     a.getimages("rabbit stew", 1)
     # a.getimages("large landscale", 20)
-    a.getimages("ragablaze", 50)
+    a.getimages("funny monkey", 50)
     time.sleep(3)
     a.close()
