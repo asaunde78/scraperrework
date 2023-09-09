@@ -15,6 +15,9 @@ import urllib.parse
 
 class scraper():
     def __init__(self):
+        '''
+        Hi
+        '''
         options = Options()
         options.add_argument('lang=en') 
         options.add_argument('--headless=new') 
@@ -29,10 +32,7 @@ class scraper():
 
         self.driver = webdriver.Chrome(options=options)#"driver",options=options)
 
-        
-
-        
-    def get_images(self, search, offset, num):
+    def get_images(self, search: str, num: int, offset: int=0, clear: bool = False) -> None:
         
         url = "https://www.google.com/search"
 
@@ -47,7 +47,8 @@ class scraper():
 
         print("[INFO] Gathering image links")
         address = f"{url}?{query_string}"
-        requests.get(f"http://localhost:6969/kill")
+        if(clear):
+            requests.get(f"http://localhost:6969/kill")
         self.driver.get(address)
 
 
@@ -64,23 +65,13 @@ class scraper():
         highest_index = 0#
         count = 0
         while len(self.driver.find_elements(By.ID, f"DONE")) == 0:
-                
-            # thumbnails = self.driver.find_elements(By.CLASS_NAME,"bRMDJf")
             thumbnails = self.driver.find_elements(By.CLASS_NAME,"wXeWr")
-            
             thumbnails = thumbnails[highest_index:]
             tries = 0
-            # thumbnails = thumbnails[highest_index:][::]
             for nail in thumbnails:
-
-                # while tries < self.tries:
                 try:
-                    # print("about to click! so excited")
                     nail.click()
-                    # if self.slower:
-                    #     time.sleep(1)
-                    
-                    # break
+                
                 except Exception as e:
                     
                     print(f"[{offset}-ERROR] failed to click: ", e)
@@ -88,14 +79,9 @@ class scraper():
                     if tries == 5:
                         print("[ERROR] RAN OUT OF TRIES :/")
                     continue
-                class_name = "f2By0e"
-                # waitstart = time.time()
+                
                 count += 1
-                try:
-                    wait = WebDriverWait(self.driver, 3)
-                    wait.until(EC.presence_of_element_located((By.CLASS_NAME, class_name))) # looking for image holder
-                except:
-                    continue
+                
                 
                 if(len(self.driver.find_elements(By.ID, f"DONE")) > 0):
                     print(f"[{offset}DONE] !!! FOUND A DONE")
@@ -119,7 +105,7 @@ class manager():
         self.ts = multiprocessing.Process(target=run_server,args=(self.site,))
         self.ts.start()
     def getimages(self,search, num):
-        self.scraper.get_images(search, 0, num)
+        self.scraper.get_images(search, num, 10,clear=True)
     def close(self):
         self.ts.terminate()
 
@@ -128,6 +114,6 @@ if __name__ == "__main__":
     a.start()# <- we don't need this 
     a.getimages("rabbit stew", 1)
     # a.getimages("large landscale", 20)
-    a.getimages("funny monkey", 50)
+    a.getimages("nature landscape", 50)
     time.sleep(3)
     a.close()
