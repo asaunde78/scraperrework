@@ -32,7 +32,7 @@ class scraper():
 
         self.driver = webdriver.Chrome(options=options)#"driver",options=options)
 
-    def get_images(self, search: str, num: int, offset: int=0, clear: bool = False) -> None:
+    def get_images(self, search: str, num: int, offset: int=0, jump: int = 1,clear: bool = False) -> None:
         
         url = "https://www.google.com/search"
 
@@ -59,14 +59,14 @@ class scraper():
         try:
             wait = WebDriverWait(self.driver, 6)
             # wait.until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
-            wait.until(EC.presence_of_element_located((By.CLASS_NAME,"bRMDJf")))
+            wait.until(EC.presence_of_element_located((By.CLASS_NAME,"mJxzWe")))
         except:
             print("didn't work")
-        highest_index = 0#
+        highest_index = offset
         count = 0
         while len(self.driver.find_elements(By.ID, f"DONE")) == 0:
-            thumbnails = self.driver.find_elements(By.CLASS_NAME,"wXeWr")
-            thumbnails = thumbnails[highest_index:]
+            thumbnails = self.driver.find_elements(By.CLASS_NAME,"PNCib")
+            thumbnails = thumbnails[highest_index:][::jump]
             tries = 0
             for nail in thumbnails:
                 try:
@@ -89,8 +89,8 @@ class scraper():
                     print(f"finished in {eD1 -sT1}")
                     return
                 
-                print(f"[IMAGE] {offset} got image {count}/{num}")
-                highest_index += 1#*ind
+                print(f"[IMAGE] {offset} clicked image {count}/{num}")
+                highest_index += jump
         
 
 class manager():
@@ -105,7 +105,7 @@ class manager():
         self.ts = multiprocessing.Process(target=run_server,args=(self.site,))
         self.ts.start()
     def getimages(self,search, num):
-        self.scraper.get_images(search, num, 10,clear=True)
+        self.scraper.get_images(search, num, jump=1,clear=True)
     def close(self):
         self.ts.terminate()
 
@@ -114,6 +114,6 @@ if __name__ == "__main__":
     a.start()# <- we don't need this 
     a.getimages("rabbit stew", 1)
     # a.getimages("large landscale", 20)
-    a.getimages("nature landscape", 50)
+    a.getimages("yiff", 50)
     time.sleep(3)
     a.close()
